@@ -22,7 +22,7 @@ async function sendMessage() {
 
     // Call Gradio API to get the AI response
     try {
-        const response = await fetch("https://braxtongough-myai.hf.space/run/predict", {
+        const response = await fetch("https://huggingface.co/spaces/braxtongough-myai/api/predict", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
