@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chatbot</title>
+    <title>JobsAI</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
 
     <!-- Google Identity Platform API -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-
 </head>
 <body>
 
@@ -38,25 +37,31 @@
 
     <!-- Google Sign-In Script -->
     <script>
+        // This function handles the credential response
         function handleCredentialResponse(response) {
-            const data = response.credential;  // Contains user data
+            console.log("Credential Response:", response); // Logs the credential data
+            const data = response.credential;  // Contains the user's data
 
-            // Handle the user data here (you can log it, send it to the server, etc.)
-            console.log("User signed in: ", data);
+            // You can handle the user data here (e.g., send it to a server, store it, etc.)
+            console.log("User signed in:", data);  // Log the user's data
         }
 
         window.onload = function () {
+            console.log("Initializing Google Sign-In...");
+
             google.accounts.id.initialize({
-                client_id: "419045857089-pkcqbik3kntd8p0g3r517v54a926eok9.apps.googleusercontent.com",  // Replace with your actual Google Client ID
+                client_id: "419045857089-pkcqbik3kntd8p0g3r517v54a926eok9.apps.googleusercontent.com",  // Use your actual Google Client ID
                 callback: handleCredentialResponse
             });
 
+            // Render the Google Sign-In button
             google.accounts.id.renderButton(
                 document.getElementById("g_id_onload"), 
-                { theme: "outline", size: "large" }  // Customize button style
+                { theme: "outline", size: "large" }  // Customize the button style
             );
 
-            google.accounts.id.prompt();  // Optionally prompt the user for login
+            // Optionally, prompt the user for login
+            google.accounts.id.prompt();
         };
     </script>
 
