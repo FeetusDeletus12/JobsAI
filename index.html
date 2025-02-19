@@ -3,11 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobsAI</title>
+    <title>AI Chatbot</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
 
     <!-- Google Identity Platform API -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <style>
+        /* Additional styling for positioning the Google Sign-In button */
+        .g_id_signin {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+
+        /* Style to display the user's Google account image */
+        .user-info {
+            display: none;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+            padding-left: 50px;
+            font-size: 16px;
+        }
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body>
 
@@ -31,6 +59,12 @@
         data-logo_alignment="left">
     </div>
 
+    <!-- Google User Info -->
+    <div class="user-info" id="user-info">
+        <img id="user-image" src="" alt="User's Google Image" />
+        <span id="user-name"></span>
+    </div>
+
     <!-- Gradio JS Module -->
     <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/5.0.1/gradio.js"></script>
     <script src="script.js"></script> <!-- Link to external JS file -->
@@ -42,8 +76,17 @@
             console.log("Credential Response:", response); // Logs the credential data
             const data = response.credential;  // Contains the user's data
 
-            // You can handle the user data here (e.g., send it to a server, store it, etc.)
-            console.log("User signed in:", data);  // Log the user's data
+            // Display user's account image and name
+            const userInfo = document.getElementById("user-info");
+            const userImage = document.getElementById("user-image");
+            const userName = document.getElementById("user-name");
+
+            userImage.src = `https://www.gstatic.com/api/identity/values?alt=json&access_token=${data}`;
+            userName.textContent = data;
+
+            // Show the user's info and hide the sign-in button
+            userInfo.style.display = "block";
+            document.querySelector(".g_id_signin").style.display = "none";
         }
 
         window.onload = function () {
