@@ -5,37 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Chatbot</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
-
-    <!-- Google Identity Platform API -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-    <style>
-        /* Additional styling for positioning the Google Sign-In button */
-        .g_id_signin {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 10;
-        }
-
-        /* Style to display the user's Google account image */
-        .user-info {
-            display: none;
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 10;
-            padding-left: 50px;
-            font-size: 16px;
-        }
-
-        .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            vertical-align: middle;
-        }
-    </style>
 </head>
 <body>
 
@@ -44,69 +13,9 @@
         <gradio-app src="https://braxtongough-myai.hf.space"></gradio-app>
     </div>
 
-    <!-- Google Sign-In Button -->
-    <div id="g_id_onload"
-        data-client_id="419045857089-pkcqbik3kntd8p0g3r517v54a926eok9.apps.googleusercontent.com"
-        data-login_uri="https://feetusdeletus12.github.io/JobsAI/oauth2callback"
-        data-auto_prompt="false">
-    </div>
-    <div class="g_id_signin" 
-        data-type="standard"
-        data-size="large"
-        data-theme="outline"
-        data-text="sign_in_with"
-        data-shape="rectangular"
-        data-logo_alignment="left">
-    </div>
-
-    <!-- Google User Info -->
-    <div class="user-info" id="user-info">
-        <img id="user-image" src="" alt="User's Google Image" />
-        <span id="user-name"></span>
-    </div>
-
     <!-- Gradio JS Module -->
     <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/5.0.1/gradio.js"></script>
     <script src="script.js"></script> <!-- Link to external JS file -->
-
-    <!-- Google Sign-In Script -->
-    <script>
-        // This function handles the credential response
-        function handleCredentialResponse(response) {
-            console.log("Credential Response:", response); // Logs the credential data
-            const data = response.credential;  // Contains the user's data
-
-            // Display user's account image and name
-            const userInfo = document.getElementById("user-info");
-            const userImage = document.getElementById("user-image");
-            const userName = document.getElementById("user-name");
-
-            userImage.src = `https://www.gstatic.com/api/identity/values?alt=json&access_token=${data}`;
-            userName.textContent = data;
-
-            // Show the user's info and hide the sign-in button
-            userInfo.style.display = "block";
-            document.querySelector(".g_id_signin").style.display = "none";
-        }
-
-        window.onload = function () {
-            console.log("Initializing Google Sign-In...");
-
-            google.accounts.id.initialize({
-                client_id: "419045857089-pkcqbik3kntd8p0g3r517v54a926eok9.apps.googleusercontent.com",  // Use your actual Google Client ID
-                callback: handleCredentialResponse
-            });
-
-            // Render the Google Sign-In button
-            google.accounts.id.renderButton(
-                document.getElementById("g_id_onload"), 
-                { theme: "outline", size: "large" }  // Customize the button style
-            );
-
-            // Optionally, prompt the user for login
-            google.accounts.id.prompt();
-        };
-    </script>
 
 </body>
 </html>
